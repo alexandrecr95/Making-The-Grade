@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Grades</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        var grades = "jim|25, sue|32, mary|34, ann|22, ted|28, frank|15, lisa|19, mike|30, ahn|26, vishaya|27";
+
+        // Step 1: Convert grades string to an array of students
+        var students = grades.split(", ");
+
+        // Sort the students array alphabetically by name
+        students.sort(function(a, b) {
+            var nameA = a.split("|")[0].toUpperCase();
+            var nameB = b.split("|")[0].toUpperCase();
+            if (nameA < nameB) {
+                return -1;
+            }
+            if (nameA > nameB) {
+                return 1;
+            }
+            return 0;
+        });
+
+        // Variables to store total, lowest, highest, and sum of scores
+        var totalStudents = students.length;
+        var lowestScore = Infinity;
+        var highestScore = -Infinity;
+        var sumOfScores = 0;
+
+        // Create a table to display the student data
+        var table = document.createElement("table");
+
+        // Create table headers
+        var headerRow = table.insertRow();
+        var nameHeader = headerRow.insertCell();
+        var scoreHeader = headerRow.insertCell();
+        nameHeader.textContent = "Name";
+        scoreHeader.textContent = "Score";
+
+        // Loop through each student and display their name and score in the table
+        for (var i = 0; i < students.length; i++) {
+            var studentData = students[i].split("|");
+            var studentName = studentData[0];
+            var studentScore = parseInt(studentData[1]);
+
+            // Step 2: Capitalize the first letter of the student's name
+            var capitalizedStudentName = studentName.charAt(0).toUpperCase() + studentName.slice(1);
+
+            // Create a new row in the table for each student
+            var row = table.insertRow();
+            var nameCell = row.insertCell();
+            var scoreCell = row.insertCell();
+            nameCell.textContent = capitalizedStudentName;
+            scoreCell.textContent = studentScore;
+
+            // Update lowest and highest scores
+            if (studentScore < lowestScore) {
+                lowestScore = studentScore;
+            }
+            if (studentScore > highestScore) {
+                highestScore = studentScore;
+            }
+
+            // Calculate the sum of scores
+            sumOfScores += studentScore;
+        }
+
+        // Step 4: Calculate the average score
+        var averageScore = sumOfScores / totalStudents;
+
+        // Append the table to the body of the document
+        document.body.appendChild(table);
+
+        // Step 5: Display the total number of students, lowest, highest, and average scores
+        document.write("<p>Total Students: " + totalStudents + "</p>");
+        document.write("<p>Lowest Score: " + lowestScore + "</p>");
+        document.write("<p>Highest Score: " + highestScore + "</p>");
+        document.write("<p>Average Score: " + averageScore + "</p>");
+        document.write("<div class='center'>");
+        document.write("<p>Created by Alexandre Correia</p>");
+        document.write("<p>IT 211 - 07/15/23</p>");
+        document.write("</div>");
+    </script>
+</body>
+</html>
